@@ -1,41 +1,41 @@
 name: Build IRC TV PLAYER
 
 on:
-workflow_dispatch:
-push:
-branches:
-- main
+  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-build:
-runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-steps:
-  - name: Get project
-    uses: actions/checkout@v4
+    steps:
+      - name: Get project
+        uses: actions/checkout@v4
 
-  - name: Install Java
-    uses: actions/setup-java@v4
-    with:
-      distribution: temurin
-      java-version: '17'
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
 
-  - name: Install Gradle
-    uses: gradle/actions/setup-gradle@v4
-    with:
-      gradle-version: '8.2'
+      - name: Install Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.2'
 
-  - name: Extract Android project
-    run: |
-      unzip IRC_TV_PLAYER_MODIFIE.zip
-      ls -la IRC_TV_PLAYER_MODIFIE
+      - name: Extract Android project
+        run: |
+          unzip IRC_TV_PLAYER_MODIFIE.zip
+          ls -la IRC_TV_PLAYER_MODIFIE
 
-  - name: Build APK
-    working-directory: IRC_TV_PLAYER_MODIFIE
-    run: gradle assembleDebug
+      - name: Build APK
+        working-directory: IRC_TV_PLAYER_MODIFIE
+        run: gradle assembleDebug
 
-  - name: Save APK
-    uses: actions/upload-artifact@v4
-    with:
-      name: IRC-TV-PLAYER-APK
-      path: IRC_TV_PLAYER_MODIFIE/app/build/outputs/apk/debug/app-debug.apk
+      - name: Save APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: IRC-TV-PLAYER-APK
+          path: IRC_TV_PLAYER_MODIFIE/app/build/outputs/apk/debug/app-debug.apk
